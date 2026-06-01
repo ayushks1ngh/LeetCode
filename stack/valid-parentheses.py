@@ -1,13 +1,24 @@
 class Solution:
     def isValid(self, s: str) -> bool:
 
-        opens = 0
-        closes = 0
+        stack = []
+
+        mapping = {
+            ')': '(',
+            ']': '[',
+            '}': '{'
+        }
 
         for ch in s:
-            if ch in "([{":
-                opens += 1
-            else:
-                closes += 1
 
-        return opens == closes
+            if ch in mapping:
+
+                if not stack or stack[-1] != mapping[ch]:
+                    return False
+
+                stack.pop()
+
+            else:
+                stack.append(ch)
+
+        return len(stack) == 0
