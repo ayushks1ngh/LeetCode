@@ -15,13 +15,17 @@ class Solution:
             "9": "wxyz"
         }
 
-        if len(digits) == 1:
-            return list(phone[digits[0]])
-
         result = []
 
-        for a in phone[digits[0]]:
-            for b in phone[digits[1]]:
-                result.append(a + b)
+        def backtrack(index, path):
+
+            if index == len(digits):
+                result.append(path)
+                return
+
+            for ch in phone[digits[index]]:
+                backtrack(index + 1, path + ch)
+
+        backtrack(0, "")
 
         return result
