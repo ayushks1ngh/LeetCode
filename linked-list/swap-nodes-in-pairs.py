@@ -1,24 +1,20 @@
 class Solution:
     def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
 
-        if not head or not head.next:
-            return head
+        dummy = ListNode(0)
+        dummy.next = head
 
-        prev = None
-        curr = head
+        prev = dummy
 
-        while curr and curr.next:
+        while prev.next and prev.next.next:
 
-            first = curr
-            second = curr.next
+            first = prev.next
+            second = first.next
 
             first.next = second.next
             second.next = first
-
-            if prev:
-                prev.next = second
+            prev.next = second
 
             prev = first
-            curr = first.next
 
-        return head
+        return dummy.next
