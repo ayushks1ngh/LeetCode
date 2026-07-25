@@ -1,25 +1,21 @@
 class Solution:
-    def isMatch(self, s: str, p: str) -> bool:
-        i = j = 0
-        star = -1
-        match = 0
+    def multiply(self, num1: str, num2: str) -> str:
+        if num1 == "0" or num2 == "0":
+            return "0"
 
-        while i < len(s):
-            if j < len(p) and (p[j] == s[i] or p[j] == '?'):
-                i += 1
-                j += 1
-            elif j < len(p) and p[j] == '*':
-                star = j
-                match = i
-                j += 1
-            elif star != -1:
-                j = star + 1
-                match += 1
-                i = match
-            else:
-                return False
+        m, n = len(num1), len(num2)
+        res = [0] * (m + n)
 
-        while j < len(p) and p[j] == '*':
-            j += 1
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                mul = (ord(num1[i]) - ord('0')) * (ord(num2[j]) - ord('0'))
+                s = mul + res[i + j + 1]
+                res[i + j + 1] = s % 10
+                res[i + j] += s // 10
 
-        return j == len(p)
+        ans = []
+        for num in res:
+            if not (len(ans) == 0 and num == 0):
+                ans.append(str(num))
+
+        return "".join(ans)
