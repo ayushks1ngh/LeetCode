@@ -1,18 +1,20 @@
-def combine(self, n, k):   
-		sol=[]
-        def backtrack(remain,comb,nex):
-			# solution found
-            if remain==0:
-                sol.append(comb.copy())
-            else:
-				# iterate through all possible candidates
-                for i in range(nex,n+1):
-					# add candidate
-                    comb.append(i)
-					#backtrack
-                    backtrack(remain-1,comb,i+1)
-					# remove candidate
-                    comb.pop()
-            
-        backtrack(k,[],1)
-        return sol
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+
+        ans = []
+        path = []
+
+        def backtrack(start: int) -> None:
+
+            if len(path) == k:
+                ans.append(path.copy())
+                return
+
+            for num in range(start, n + 1):
+                path.append(num)
+                backtrack(num + 1)
+                path.pop()
+
+        backtrack(1)
+
+        return ans
