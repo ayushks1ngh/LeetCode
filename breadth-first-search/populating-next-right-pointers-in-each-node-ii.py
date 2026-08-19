@@ -1,25 +1,55 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
         if not root:
-            return None
-        
-        curr=root
-        dummy=Node(-999)        
-        head=root        
+            return root
+        #brute force
+        # q = deque()
+        # q.append(root)
+        # while q:
+        #     size = len(q)
+        #     for i in range(size):
+        #         t = q.popleft()
+        #         if i!=size-1:
+        #             t.next = q[0]
+        #         else:
+        #             t.next = None
+        #         if t.left:
+        #             q.append(t.left)
+        #         if t.right:
+        #             q.append(t.right)
+        # return root
+# common compile time errors
+# q.append only accept one param
+# there is no null in python
 
-		while head:
-            curr=head # initialize current level's head
-            prev=dummy # init prev for next level linked list traversal
-			# iterate through the linked-list of the current level and connect all the siblings in the next level
-            while curr:  
-                if curr.left:
-                    prev.next=curr.left
-                    prev=prev.next
-                if curr.right:
-                    prev.next=curr.right
-                    prev=prev.next                                                
-                curr=curr.next
-            head=dummy.next # update head to the linked list of next level
-            dummy.next=None # reset dummy node
+
+#optimized space complexity
+        dummy = Node(0) # to track previous linked node's start
+        pre = root # link alread created
+        tar = dummy # link need to create
+        while pre:
+            cur = pre
+            tar = dummy
+            while cur:
+                if cur.left:
+                    tar.next = cur.left
+                    tar = tar.next
+                if cur.right:
+                    tar.next = cur.right
+                    tar = tar.next
+                cur = cur.next
+            pre = dummy.next #
+            dummy.next = None
         return root
-            
+# common compile time errors
+#after the logic don't forget to return 
